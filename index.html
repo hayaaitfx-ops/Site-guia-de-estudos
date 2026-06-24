@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Guia de Estudos</title>
+    <meta name="description" content="Um portal de estudos gamificado com Pomodoro, flashcards de repetição espaçada, trilhas de estudo interativas e anotações livre de distrações.">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <nav class="top-navbar">
+        
+        <ul class="nav-links-top left-links">
+            <li><a href="#" id="nav-sobre-btn">Sobre nós</a></li>
+            <li><a href="#" id="nav-contato-btn">Contatos</a></li>
+        </ul>
+
+        <div class="nav-center">
+            <a href="plano_assinatura.html" class="btn-plans-premium">
+                <span style="font-size: 1.1rem;">⭐</span> Assinar Premium
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <span id="nav-user-email" style="color:#64748b; font-size:0.78rem;"></span>
+            <a href="perfil.html" class="nav-profile-btn" id="nav-profile-avatar" title="Meu Perfil">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </a>
+            <button class="logout-btn" id="logout-btn">Sair</button>
+        </div>
+        
+    </nav>
+
+    <!-- ACCESSIBILITY FAB -->
+    <div class="a11y-fab" id="a11y-fab">
+        <button class="a11y-fab-btn" id="a11y-increase" title="Aumentar fonte">A+</button>
+        <button class="a11y-fab-btn" id="a11y-decrease" title="Diminuir fonte" style="font-size:0.8rem;">A-</button>
+        <div class="a11y-fab-label">fonte</div>
+    </div>
+
+    <!-- MODAL SOBRE NÓS -->
+    <div class="info-modal-overlay" id="modal-sobre">
+        <div class="info-modal">
+            <button class="close-modal" id="close-sobre">×</button>
+            <h2>📚 Sobre o Guia de Estudos</h2>
+            <p>O <strong>Guia de Estudos PRO</strong> é um portal de aprendizado gamificado desenvolvido como projeto acadêmico, com o objetivo de tornar o estudo mais eficiente, engajante e organizado.</p>
+            <p>Nossas ferramentas incluem o <strong>Glow Pomodoro</strong> para foco profundo, <strong>Flashcards com repetição espaçada</strong>, <strong>Trilhas de estudo</strong> personalizáveis, <strong>Quadro Kanban</strong> e muito mais.</p>
+            <p>Cada sessão de estudo gera XP, aumenta seu nível e mantém sua ofensiva — transformando o aprendizado em uma jornada progressiva.</p>
+        </div>
+    </div>
+
+    <!-- MODAL CONTATOS -->
+    <div class="info-modal-overlay" id="modal-contato">
+        <div class="info-modal">
+            <button class="close-modal" id="close-contato">×</button>
+            <h2>📬 Fale Conosco</h2>
+            <p>Tem dúvidas, sugestões ou quer reportar um problema? Entre em contato pelos canais abaixo:</p>
+            <div class="contact-row"><span>✉️</span><span>suporte@guiaestudos.com.br</span></div>
+            <div class="contact-row"><span>📱</span><span>WhatsApp: (21) 99999-0000</span></div>
+            <div class="contact-row"><span>🐙</span><span>github.com/guia-estudos-pro</span></div>
+            <div class="contact-row"><span>🕐</span><span>Atendimento: Seg–Sex, 9h–18h</span></div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <!-- Sidebar Minimize Toggle Button -->
+            <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Minimizar barra lateral">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+
+            <div class="logo-container" id="logo-home-btn" style="cursor:pointer;" title="Ir para o Painel Principal">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: white;"><path d="m4 6 8-4 8 4-8 4-8-4z"/><path d="M12 10v12"/><path d="M12 22a10 10 0 0 0 10-10H12v10z"/><path d="M12 22A10 10 0 0 1 2 12h10v10z"/></svg>
+                </div>
+                <div class="logo-meta">
+                    <span class="logo-text">Guia de Estudos</span>
+                    <div class="logo-tag">Aprendizado</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav-wrapper">
+                
+                <div class="sidebar-nav-scroll" id="sidebar-nav-scroll">
+                <nav class="nav-links">
+                <li class="nav-item active" data-target="dashboard-section">
+                    <button title="Painel Principal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                        <span>Painel Principal</span>
+                    </button>
+                </li>
+                <li class="nav-item" data-target="roadmaps-section">
+                    <button title="Trilhas de Estudo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        <span>Trilhas de Estudo</span>
+                    </button>
+                </li>
+                <li class="nav-item" data-target="pomodoro-section">
+                    <button title="Glow Pomodoro">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span>Glow Pomodoro</span>
+                    </button>
+                </li>
+                <li class="nav-item" data-target="flashcards-section">
+                    <button title="Flashcards">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                        <span>Flashcards</span>
+                    </button>
+                </li>
+                <li class="nav-item" data-target="planner-section">
+                    <button title="Quadro Kanban">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span>Quadro Kanban</span>
+                    </button>
+                </li>
+                <li class="nav-item" data-target="notes-section">
+                    <button title="Notas Zen">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <span>Notas Zen</span>
+                    </button>
+                </li>
+                <li class="nav-item quiz-item" data-target="quiz-section">
+                    <button title="Quiz de Matérias">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span>Quiz de Matérias</span>
+                    </button>
+                </li>
+                <li class="nav-item code-item" data-target="editor-section">
+                    <button title="Código Zen">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+                        <span>Código Zen</span>
+                    </button>
+                </li>
+                <li class="nav-item guide-item" data-target="guide-section">
+                    <button title="Guia de Estudos">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        <span>Guia de Estudos</span>
+                    </button>
+                </li>
+                <li class="nav-item admin-item" id="admin-nav-item" data-target="admin-section" style="display:none;">
+                    <button title="Painel Admin">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        <span>⚙ Painel Admin</span>
+                    </button>
+                </li>
+                </nav>
+                </div>
+                <button class="sidebar-scroll-btn" id="sidebar-scroll-down" title="Rolar para baixo">▼</button>
+            </div>
+            
+            <!-- User Gamification Status Bottom Card -->
+            <div class="user-profile-summary">
+                <div class="user-profile-header">
+                    <div class="avatar" id="sidebar-avatar">D</div>
+                    <div class="user-meta">
+                        <span class="user-name" id="sidebar-username">Estudante Zen</span>
+                        <span class="user-rank" id="sidebar-rank">Iniciante das Sombras</span>
+                    </div>
+                </div>
+                <div class="sidebar-level-progress">
+                    <div class="level-text-row">
+                        <span class="level-badge-label" id="sidebar-level-label">Nível 1</span>
+                        <span class="level-xp-indicator" id="sidebar-xp-label">0 / 100 XP</span>
+                    </div>
+                    <div class="level-bar-bg">
+                        <div class="level-bar-fill" id="sidebar-xp-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Application Workspace -->
+        <main class="main-content">
+            
+            <!-- Header bar displaying general user stats -->
+            <header class="app-header">
+                <div class="page-title-area">
+                    <h1 id="main-page-title">Painel de Controle</h1>
+                    <p id="main-page-subtitle">Sua central gamificada de aprendizado de alta performance.</p>
+                </div>
+                
+                <div class="header-stats">
+                    <div class="stat-chip" title="Dias seguidos de estudos focados!">
+                        <div class="stat-chip-icon streak">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                        </div>
+                        <div class="stat-chip-details">
+                            <span class="stat-chip-label">Ofensiva</span>
+                            <span class="stat-chip-value" id="header-streak-value">0 Dias</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-chip" title="Experiência acumulada estudando no portal.">
+                        <div class="stat-chip-icon xp">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/></svg>
+                        </div>
+                        <div class="stat-chip-details">
+                            <span class="stat-chip-label">Total XP</span>
+                            <span class="stat-chip-value" id="header-xp-value">0 XP</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-chip">
+                        <div class="stat-chip-icon level">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="stat-chip-details">
+                            <span class="stat-chip-label">Estágio</span>
+                            <span class="stat-chip-value" id="header-level-value">Level 1</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- SECTION 1: DASHBOARD -->
+            <section id="dashboard-section" class="app-section active">
+                
+                <div class="metrics-row">
+                    <div class="glass-panel metric-card">
+                        <div class="metric-icon-box blue">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="metric-stats">
+                            <span class="metric-value" id="dash-minutes-studied">0m</span>
+                            <span class="metric-label">Tempo Focado</span>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-panel metric-card">
+                        <div class="metric-icon-box emerald">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="metric-stats">
+                            <span class="metric-value" id="dash-roadmaps-completed">0 / 0</span>
+                            <span class="metric-label">Passos das Trilhas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-panel metric-card">
+                        <div class="metric-icon-box rose">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+                        </div>
+                        <div class="metric-stats">
+                            <span class="metric-value" id="dash-flashcards-reviewed">0</span>
+                            <span class="metric-label">Cards Revisados</span>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-panel metric-card">
+                        <div class="metric-icon-box amber">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="metric-stats">
+                            <span class="metric-value" id="dash-tasks-pending">0</span>
+                            <span class="metric-label">Tarefas Pendentes</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel metric-card">
+                        <div class="metric-icon-box quiz">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="metric-stats">
+                            <span class="metric-value" id="dash-quizzes-done">0</span>
+                            <span class="metric-label">Quizzes Feitos</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    
+                    <!-- Welcome Hero Card -->
+                    <div class="glass-panel welcome-banner dashboard-row-full">
+                        <div class="welcome-info">
+                            <h2>Bem-vindo ao seu Templo de Aprendizado! ⛩️</h2>
+                            <p>Sua consistência é sua maior arma. Estude utilizando o Glow Pomodoro para sintetizar sons focados, marque roadmaps como concluídos, revise seus Flashcards e ganhe XP para evoluir seu nível de estudante!</p>
+                        </div>
+                        <button class="welcome-action-btn" id="dash-start-study-btn">Começar Ciclo de Foco</button>
+                    </div>
+                    
+                    <!-- Progress Weekly Bar Chart -->
+                    <div class="glass-panel weekly-activity-box">
+                        <h3>Atividade Semanal (Foco Diário)</h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: -0.5rem; margin-bottom: 1.5rem;">Acompanhe seus minutos acumulados nos últimos 7 dias.</p>
+                        <div class="weekly-grid" id="dashboard-weekly-grid">
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-0" style="height: 0%;"></div></div>
+                                <span class="day-name">Seg</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-1" style="height: 0%;"></div></div>
+                                <span class="day-name">Ter</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-2" style="height: 0%;"></div></div>
+                                <span class="day-name">Qua</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-3" style="height: 0%;"></div></div>
+                                <span class="day-name">Qui</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-4" style="height: 0%;"></div></div>
+                                <span class="day-name">Sex</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-5" style="height: 0%;"></div></div>
+                                <span class="day-name">Sáb</span>
+                            </div>
+                            <div class="weekly-day">
+                                <div class="day-bar-bg"><div class="day-bar-fill" id="bar-day-6" style="height: 0%;"></div></div>
+                                <span class="day-name">Dom</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gamification Achievements -->
+                    <div class="glass-panel achievements-box">
+                        <h3>Conquistas Desbloqueadas 🏆</h3>
+                        <div class="achievements-list" id="dash-achievements-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION 2: ROADMAPS -->
+            <section id="roadmaps-section" class="app-section">
+                <div class="roadmaps-layout">
+                    <!-- Left Sidebar Roadmap selector -->
+                    <div class="glass-panel roadmap-selector-box">
+                        <h3>Minhas Trilhas</h3>
+                        <div class="roadmap-selector-list" id="roadmap-selector-list">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-roadmap-btn" id="open-roadmap-modal-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Criar Nova Trilha
+                        </button>
+                    </div>
+                    
+                    <!-- Right Area Active Roadmap View -->
+                    <div class="glass-panel roadmap-viewer">
+                        <div class="roadmap-view-header">
+                            <div class="roadmap-header-info">
+                                <h2 id="active-roadmap-title">Trilha Selecionada</h2>
+                                <p id="active-roadmap-desc">Selecione uma trilha na barra lateral ou crie uma nova para começar.</p>
+                            </div>
+                            <button class="delete-roadmap-btn" id="delete-roadmap-btn" style="display: none;">Excluir Trilha</button>
+                        </div>
+                        
+                        <div class="roadmap-progress-row" id="active-roadmap-progress-container" style="display: none;">
+                            <div class="roadmap-progress-details">
+                                <div class="roadmap-progress-stats">
+                                    <span>Progresso Geral</span>
+                                    <span id="active-roadmap-percentage">0%</span>
+                                </div>
+                                <div class="roadmap-bar-bg">
+                                    <div class="roadmap-bar-fill" id="active-roadmap-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- List of Roadmap Node Steps -->
+                        <div class="roadmap-steps-list" id="active-roadmap-steps">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION 3: GLOW POMODORO -->
+            <section id="pomodoro-section" class="app-section">
+                <div class="pomodoro-layout">
+                    <!-- Display circular radial countdown -->
+                    <div class="glass-panel pomodoro-display-box">
+                        <div class="timer-circle-container">
+                            <svg class="timer-svg">
+                                <circle class="timer-circle-bg" cx="130" cy="130" r="120"/>
+                                <circle class="timer-circle-fill" id="pomodoro-radial-ring" cx="130" cy="130" r="120"/>
+                            </svg>
+                            <div class="timer-digital-display">
+                                <span class="timer-digits" id="pomodoro-time-display">25:00</span>
+                                <span class="timer-mode-label" id="pomodoro-mode-display">Modo Foco</span>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-controls">
+                            <button class="timer-btn reset" id="pomodoro-reset-btn" title="Resetar Cronômetro">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            </button>
+                            <button class="timer-btn toggle" id="pomodoro-toggle-btn" title="Iniciar/Pausar">
+                                <svg id="pomodoro-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            </button>
+                            <!-- Interval Switch buttons -->
+                            <button class="timer-btn reset" id="pomodoro-skip-btn" title="Pular Intervalo">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                            </button>
+                        </div>
+                        
+                        <div class="pomodoro-log-box" style="width: 100%; max-width: 320px;">
+                            <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">Sessões Realizadas Hoje</p>
+                            <div class="log-list" id="pomodoro-sessions-log">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Web Audio Noise Generator Synthesizer panel -->
+                    <div class="glass-panel audio-synth-box">
+                        <div class="audio-synth-header">
+                            <h3>Soundscape Foco Sintetizado 🎹</h3>
+                            <p>Gere e misture ondas de frequências brownianas (ruído marrom) ou ruídos ambientais sintetizados em tempo real no seu navegador para maximizar o bloqueio de distrações acústicas externas.</p>
+                        </div>
+                        
+                        <div class="soundscape-toggles">
+                            <div class="sound-card" id="sound-card-brown">
+                                <div class="sound-header">
+                                    <span class="sound-title">Ondas Brownianas (Foco)</span>
+                                    <span class="sound-icon">🌊</span>
+                                </div>
+                                <div class="sound-slider disabled" id="sound-slider-brown-box">
+                                    <input type="range" id="sound-volume-brown" min="0" max="1" step="0.05" value="0.5">
+                                </div>
+                            </div>
+                            
+                            <div class="sound-card" id="sound-card-rain">
+                                <div class="sound-header">
+                                    <span class="sound-title">Eco de Sintetizador Cósmico</span>
+                                    <span class="sound-icon">🛸</span>
+                                </div>
+                                <div class="sound-slider disabled" id="sound-slider-rain-box">
+                                    <input type="range" id="sound-volume-rain" min="0" max="1" step="0.05" value="0.3">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem;">
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4;">
+                                💡 <strong>Dica Zen:</strong> O ruído marrom sintetizado simula frequências mais profundas e suaves que o ruído branco tradicional, diminuindo batimentos cardíacos, relaxando a mente e facilitando estados de hiperfoco imediato.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION 4: FLASHCARDS (ACTIVE RECALL) -->
+            <section id="flashcards-section" class="app-section">
+                <div class="flashcards-layout">
+                    <!-- Left sidebar decks list selector -->
+                    <div class="glass-panel deck-selector-box">
+                        <h3>Baralhos</h3>
+                        <div class="deck-selector-list" id="deck-selector-list">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-roadmap-btn" id="open-deck-modal-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Criar Novo Baralho
+                        </button>
+                    </div>
+                    
+                    <!-- Center area displaying 3D flip card -->
+                    <div class="glass-panel deck-study-viewer">
+                        <div class="deck-study-header">
+                            <div class="deck-study-header-details">
+                                <h3 id="active-deck-title">Baralho Selecionado</h3>
+                                <div class="deck-srs-status" id="deck-srs-status-box" style="display: none;">
+                                    <span class="srs-metric hard" id="deck-count-hard">0 Difíceis</span>
+                                    <span class="srs-metric medium" id="deck-count-medium">0 Médios</span>
+                                    <span class="srs-metric easy" id="deck-count-easy">0 Fáceis</span>
+                                </div>
+                            </div>
+                            
+                           <div class="deck-study-actions">
+                                <button class="add-card-btn" id="delete-active-card-btn" style="display: none; border-color: rgba(244, 63, 94, 0.4); color: #f43f5e; margin-right: 0.5rem;">🗑 Excluir Card</button>
+    
+                                <button class="add-card-btn" id="delete-active-deck-btn" style="display: none; border-color: rgba(244, 63, 94, 0.4); color: #f43f5e; margin-right: 0.5rem;">🗑 Excluir Baralho</button>
+                                <button class="add-card-btn" id="open-add-card-modal-btn" style="display: none;">+ Adicionar Card</button>
+</div>
+                        </div>
+                        
+                        <!-- Empty Deck message -->
+                        <div class="flashcard-deck-empty" id="deck-empty-view">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            <p>Este baralho não possui cartões ou nenhuma carta ativa para revisão no momento!</p>
+                        </div>
+                        
+                        <!-- The 3D Flip Card -->
+                        <div class="flashcard-3d-wrapper" id="flashcard-box" style="display: none;">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">
+                                    <span class="card-index" id="flashcard-number-index">Card 1 / 10</span>
+                                    <span class="card-title-tag">Pergunta (Active Recall)</span>
+                                    <div class="card-text-content" id="flashcard-front-content">Qual a diferença entre Let e Const no JS?</div>
+                                    <span class="card-hint">Clique para revelar resposta</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="card-index" id="flashcard-number-index-back">Card 1 / 10</span>
+                                    <span class="card-title-tag">Resposta (Explicação)</span>
+                                    <div class="card-text-content" id="flashcard-back-content">Let permite reatribuição de variáveis, enquanto Const cria variáveis constantes que não podem ser reatribuídas.</div>
+                                    <span class="card-hint">Clique para voltar à pergunta</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Spaced Repetition Answer rating buttons -->
+                        <div class="flashcard-leitner-controls" id="flashcard-leitner-controls-box" style="display: none;">
+                            <button class="flip-prompt-btn" id="flashcard-flip-btn">Virar Cartão (Espaço)</button>
+                            <div class="leitner-btn-row" id="leitner-buttons" style="display: none;">
+                                <button class="leitner-btn hard" data-rating="hard">
+                                    <span>Difícil</span>
+                                    <span class="leitner-btn-label">Rever Logo</span>
+                                </button>
+                                <button class="leitner-btn medium" data-rating="medium">
+                                    <span>Médio</span>
+                                    <span class="leitner-btn-label">Rever em Breve</span>
+                                </button>
+                                <button class="leitner-btn easy" data-rating="easy">
+                                    <span>Fácil</span>
+                                    <span class="leitner-btn-label">Dominei (1 dia)</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION 5: KANBAN PLANNER -->
+            <section id="planner-section" class="app-section">
+                <div class="kanban-board">
+                    <!-- Column 1: TO DO -->
+                    <div class="kanban-column">
+                        <div class="kanban-column-header">
+                            <div class="kanban-title-row">
+                                <div class="kanban-dot todo"></div>
+                                <h4 class="kanban-column-title">A Fazer</h4>
+                            </div>
+                            <span class="kanban-column-count" id="count-todo">0</span>
+                        </div>
+                        <div class="kanban-tasks-list" id="column-todo" data-status="todo">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-task-column-btn" data-status="todo">
+                            + Adicionar Tarefa
+                        </button>
+                    </div>
+                    
+                    <!-- Column 2: IN PROGRESS -->
+                    <div class="kanban-column">
+                        <div class="kanban-column-header">
+                            <div class="kanban-title-row">
+                                <div class="kanban-dot doing"></div>
+                                <h4 class="kanban-column-title">Fazendo</h4>
+                            </div>
+                            <span class="kanban-column-count" id="count-doing">0</span>
+                        </div>
+                        <div class="kanban-tasks-list" id="column-doing" data-status="doing">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-task-column-btn" data-status="doing">
+                            + Adicionar Tarefa
+                        </button>
+                    </div>
+                    
+                    <!-- Column 3: DONE -->
+                    <div class="kanban-column">
+                        <div class="kanban-column-header">
+                            <div class="kanban-title-row">
+                                <div class="kanban-dot done"></div>
+                                <h4 class="kanban-column-title">Concluído</h4>
+                            </div>
+                            <span class="kanban-column-count" id="count-done">0</span>
+                        </div>
+                        <div class="kanban-tasks-list" id="column-done" data-status="done">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-task-column-btn" data-status="done">
+                            + Adicionar Tarefa
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECTION 6: ZEN NOTES -->
+            <section id="notes-section" class="app-section">
+                <div class="notes-layout">
+                    <!-- Left Notes Sidebar List -->
+                    <div class="glass-panel notes-sidebar-box">
+                        <h3>Minhas Notas</h3>
+                        <div class="notes-selector-list" id="notes-selector-list">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-roadmap-btn" id="open-new-note-btn">
+                            + Nova Anotação
+                        </button>
+                    </div>
+                    
+                    <!-- Notes Workspace Editor + Preview split screen -->
+                    <div class="glass-panel notes-editor-workspace">
+                        <div class="note-editor-header">
+                            <input type="text" class="note-editor-title-input" id="note-title-field" value="Título da Anotação" placeholder="Digite o título...">
+                            <div class="note-editor-actions">
+                                <button class="note-action-btn-small delete" id="note-delete-btn">Excluir Nota</button>
+                                <button class="note-action-btn-small" id="note-download-btn">Baixar TXT</button>
+                            </div>
+                        </div>
+                        
+                        <div class="note-split-view">
+                            <div class="note-textarea-box">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+                                    <span>Editor Markdown</span>
+                                    <span>Salva Automático</span>
+                                </div>
+                                <textarea class="note-editor-textarea" id="note-textarea-field" placeholder="Escreva suas anotações aqui usando Markdown...
+
+Use # para Título 1
+Use ## para Título 2
+Use * para listas
+Use > para blocos de citação
+Use ` para códigos inline"></textarea>
+                            </div>
+                            
+                            <div class="note-preview-box">
+                                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+                                    <span>Visualização Compilada</span>
+                                </div>
+                                <div class="note-compiled-preview" id="note-preview-area">
+                                    <!-- Markdown Compiled HTML output goes here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: QUIZ DE MATÉRIAS -->
+            <section id="quiz-section" class="app-section">
+
+                <!-- SCREEN 1: Subject Selection -->
+                <div id="quiz-screen-select">
+                    <div class="quiz-hero-header">
+                        <div class="quiz-hero-icon">🎯</div>
+                        <div>
+                            <h2>Quiz de Matérias</h2>
+                            <p>Escolha uma matéria e teste seus conhecimentos. Responda 10 perguntas e ganhe XP baseado na dificuldade!</p>
+                        </div>
+                    </div>
+                    <div class="quiz-subject-grid" id="quiz-subject-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- SCREEN 2: Active Question -->
+                <div id="quiz-screen-active" style="display:none;">
+                    <div class="quiz-active-header">
+                        <button class="quiz-exit-btn" id="quiz-exit-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            Sair do Quiz
+                        </button>
+                        <div class="quiz-progress-info">
+                            <span id="quiz-subject-label" class="quiz-subject-badge">Matéria</span>
+                            <span id="quiz-question-counter">Pergunta 1 / 10</span>
+                        </div>
+                        <div class="quiz-xp-earned-counter">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/></svg>
+                            <span id="quiz-live-xp">0 XP</span>
+                        </div>
+                    </div>
+
+                    <div class="quiz-progress-bar-wrapper">
+                        <div class="quiz-progress-bar-track">
+                            <div class="quiz-progress-bar-fill" id="quiz-progress-bar"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel quiz-question-card" id="quiz-question-card">
+                        <div class="quiz-difficulty-badge" id="quiz-difficulty-badge">Médio</div>
+                        <p class="quiz-question-text" id="quiz-question-text">Carregando pergunta...</p>
+                        <div class="quiz-options-grid" id="quiz-options-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="quiz-feedback-box" id="quiz-feedback-box" style="display:none;">
+                            <div class="quiz-feedback-icon" id="quiz-feedback-icon">✅</div>
+                            <div class="quiz-feedback-text" id="quiz-feedback-text">Correto!</div>
+                            <p class="quiz-explanation-text" id="quiz-explanation-text"></p>
+                            <button class="btn-primary quiz-next-btn" id="quiz-next-btn">Próxima Pergunta →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 3: Results -->
+                <div id="quiz-screen-result" style="display:none;">
+                    <div class="glass-panel quiz-result-card">
+                        <div class="quiz-result-emoji" id="quiz-result-emoji">🏆</div>
+                        <h2 class="quiz-result-title" id="quiz-result-title">Quiz Concluído!</h2>
+                        <p class="quiz-result-subtitle" id="quiz-result-subtitle">Você foi muito bem!</p>
+
+                        <div class="quiz-score-circle-wrapper">
+                            <svg class="quiz-score-ring" viewBox="0 0 120 120">
+                                <circle class="quiz-score-ring-bg" cx="60" cy="60" r="52"/>
+                                <circle class="quiz-score-ring-fill" id="quiz-score-ring-fill" cx="60" cy="60" r="52"
+                                    stroke-dasharray="326.73"
+                                    stroke-dashoffset="326.73"/>
+                            </svg>
+                            <div class="quiz-score-text">
+                                <span class="quiz-score-number" id="quiz-result-score">0/10</span>
+                                <span class="quiz-score-label">acertos</span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-result-stats">
+                            <div class="quiz-result-stat">
+                                <span class="quiz-result-stat-value" id="quiz-result-xp">0</span>
+                                <span class="quiz-result-stat-label">XP Ganho</span>
+                            </div>
+                            <div class="quiz-result-stat">
+                                <span class="quiz-result-stat-value" id="quiz-result-correct">0</span>
+                                <span class="quiz-result-stat-label">Corretas</span>
+                            </div>
+                            <div class="quiz-result-stat">
+                                <span class="quiz-result-stat-value" id="quiz-result-wrong">0</span>
+                                <span class="quiz-result-stat-label">Erradas</span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-result-actions">
+                            <button class="btn-secondary" id="quiz-retry-btn">🔁 Refazer Quiz</button>
+                            <button class="btn-primary" id="quiz-back-btn">📚 Escolher Matéria</button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION: CÓDIGO ZEN (MINI VS CODE PLAYGROUND) -->
+            <section id="editor-section" class="app-section">
+                <div class="notes-layout">
+                    <!-- Left Sidebar List (List of codes) -->
+                    <div class="glass-panel notes-sidebar-box" style="max-height: calc(100vh - 200px); display: flex; flex-direction: column;">
+                        <h3>Meus Códigos</h3>
+                        <div class="notes-selector-list" id="sandbox-selector-list" style="flex: 1; overflow-y: auto;">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button class="add-roadmap-btn" id="sandbox-new-code-btn" style="margin-top: auto; flex-shrink: 0;">
+                            + Novo Código
+                        </button>
+                    </div>
+
+                    <!-- Right Editor Workspace -->
+                    <div class="glass-panel notes-editor-workspace" style="display: flex; flex-direction: column; overflow: hidden; height: calc(100vh - 200px); min-height: 480px;">
+                        <div class="note-editor-header" style="flex-shrink: 0;">
+                            <input type="text" class="note-editor-title-input" id="sandbox-title-field" value="Sem título" placeholder="Título do código..." style="flex: 1; min-width: 0;">
+                            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                                <select id="sandbox-lang-select" class="sandbox-select" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px;">
+                                    <option value="webdev">🌐 Web Dev (HTML/CSS/JS)</option>
+                                    <option value="jslogic">🧩 Lógica JS (Console)</option>
+                                </select>
+                                <button class="btn-primary" id="sandbox-run-btn" style="padding: 0.4rem 1rem; font-size: 0.8rem; border-radius: 8px; display: flex; align-items: center; gap: 4px;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                    Executar
+                                </button>
+                                <button class="note-action-btn-small delete" id="sandbox-delete-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; margin: 0;">Excluir</button>
+                                <button class="note-action-btn-small" id="sandbox-download-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; margin: 0;">Baixar</button>
+                            </div>
+                        </div>
+
+                        <!-- Split Editor layout (Code on Left, Output on Right) -->
+                        <div class="sandbox-split-layout" style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; overflow: hidden; height: 100%; min-height: 0;">
+                            <!-- Left: Editor Pane -->
+                            <div style="display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #0d0e15;">
+                                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; padding: 0.5rem 1rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 0.05em;">
+                                    <span>Editor de Código</span>
+                                    <span>Salva Automático</span>
+                                </div>
+                                <div class="sandbox-editor-wrapper" style="flex: 1; display: flex; overflow: hidden; position: relative;">
+                                    <!-- Line numbers column -->
+                                    <div class="sandbox-line-numbers" id="sandbox-line-numbers">1</div>
+                                    <!-- Textarea -->
+                                    <textarea id="sandbox-textarea" spellcheck="false" autocomplete="off" placeholder="Escreva seu código aqui..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Right: Output Pane -->
+                            <div style="display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background: #07080d;">
+                                <div class="sandbox-tabs" style="font-size: 0.72rem; font-weight: 700; padding: 0 1rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border-color); display: flex; gap: 1rem; flex-shrink: 0; align-items: center;">
+                                    <button class="sandbox-tab-btn active" data-tab="preview" style="padding: 0.6rem 0; font-size: 0.75rem;">👁️ Preview</button>
+                                    <button class="sandbox-tab-btn" data-tab="console" style="padding: 0.6rem 0; font-size: 0.75rem;">📟 Terminal</button>
+                                </div>
+                                <div class="sandbox-output-content" style="flex: 1; overflow: hidden; position: relative; height: 100%;">
+                                    <!-- Tab 1: Preview Iframe -->
+                                    <div class="sandbox-tab-content active" id="sandbox-tab-preview" style="width: 100%; height: 100%;">
+                                        <iframe id="sandbox-iframe" sandbox="allow-scripts" title="Preview de código" style="width: 100%; height: 100%; border: none; background: #ffffff;"></iframe>
+                                    </div>
+                                    <!-- Tab 2: Terminal Console -->
+                                    <div class="sandbox-tab-content" id="sandbox-tab-console" style="display: none; width: 100%; height: 100%;">
+                                        <div class="terminal-screen" id="terminal-screen" style="width: 100%; height: 100%; overflow-y: auto;">
+                                            <div class="terminal-line system-msg">> Terminal inicializado. Clique em 'Executar' para rodar seu script JS.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: ADMIN PANEL -->
+            <section id="admin-section" class="app-section">
+                <div class="admin-header-row">
+                    <h2>⚙️ Painel de Administração</h2>
+                </div>
+
+                <!-- Admin Tabs -->
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" data-admin-tab="sessions-tab">👥 Sessões</button>
+                    <button class="admin-tab-btn" data-admin-tab="guide-mgmt-tab">📚 Gerenciar Guia</button>
+                    <button class="admin-tab-btn" data-admin-tab="quiz-mgmt-tab">🎯 Gerenciar Quizzes</button>
+                </div>
+
+                <!-- TAB 1: Sessions -->
+                <div class="admin-tab-panel active" id="sessions-tab">
+                    <div style="display:flex;justify-content:flex-end;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+                        <button class="admin-clear-btn" id="admin-clear-btn">🗑 Limpar Sessões</button>
+                    </div>
+                    <div class="admin-stats-row" id="admin-stats-row">
+                        <div class="admin-stat-card">
+                            <div class="stat-num" id="admin-total-sessions">0</div>
+                            <div class="stat-lbl">Sessões Ativas</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-num" id="admin-desktop-count">0</div>
+                            <div class="stat-lbl">Computadores</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-num" id="admin-mobile-count">0</div>
+                            <div class="stat-lbl">Dispositivos Móveis</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="stat-num" id="admin-unique-emails">0</div>
+                            <div class="stat-lbl">Emails Únicos</div>
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="overflow-x:auto;">
+                        <table class="admin-sessions-table" id="admin-sessions-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Email</th>
+                                    <th>Dispositivo</th>
+                                    <th>Data/Hora Login</th>
+                                    <th>Session ID</th>
+                                    <th>Plano</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-sessions-tbody"></tbody>
+                        </table>
+                        <div class="admin-empty" id="admin-empty-msg" style="display:none;">
+                            Nenhuma sessão registrada ainda.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Guide Management -->
+                <div class="admin-tab-panel" id="guide-mgmt-tab">
+                    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem;">
+                        <button class="guide-admin-btn add" id="admin-add-subject-btn">＋ Nova Matéria</button>
+                    </div>
+                    <div class="guide-admin-subject-list" id="guide-admin-subject-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: Quiz Management -->
+                <div class="admin-tab-panel" id="quiz-mgmt-tab">
+                    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem;">
+                        <button class="guide-admin-btn add" id="admin-add-quiz-btn">＋ Nova Questão</button>
+                    </div>
+                    <div class="guide-admin-subject-list" id="quiz-admin-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: GUIA DE ESTUDOS -->
+            <section id="guide-section" class="app-section">
+                <div class="guide-header-row">
+                    <h3>📖 Conteúdo curado pelos administradores da plataforma</h3>
+                </div>
+                <div class="guide-subject-tabs" id="guide-subject-tabs">
+                    <!-- Populated by JS -->
+                </div>
+                <div id="guide-subject-panels">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ADMIN GUIDE EDIT MODAL -->
+    <div class="admin-guide-modal-overlay" id="admin-guide-modal">
+        <div class="admin-guide-modal">
+            <button class="close-modal" id="close-admin-guide-modal">×</button>
+            <h3 id="admin-guide-modal-title">Editar Matéria</h3>
+            <input type="hidden" id="editing-subject-id">
+
+            <label>Nome da Matéria</label>
+            <input type="text" id="edit-subject-name" placeholder="Ex: Física, História...">
+
+            <label>Emoji / Ícone</label>
+            <input type="text" id="edit-subject-emoji" placeholder="Ex: ⚛️" style="max-width:80px;">
+
+            <div id="edit-modules-container">
+                </div>
+            
+            <button id="btn-add-module-admin" class="mini-add-btn" style="margin-top: 1.5rem; width: 100%; padding: 0.8rem; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px dashed #34d399; font-size: 0.9rem;">➕ Adicionar Novo Módulo a esta Matéria</button>
+
+
+            <div class="modal-actions">
+                <button class="btn-cancel" id="cancel-admin-guide-modal">Cancelar</button>
+                <button class="btn-save" id="save-admin-guide-btn">💾 Salvar Matéria</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN QUIZ EDIT/CREATE MODAL -->
+    <div class="admin-guide-modal-overlay" id="admin-quiz-modal">
+        <div class="admin-guide-modal">
+            <button class="close-modal" id="close-admin-quiz-modal">×</button>
+            <h3 id="admin-quiz-modal-title">Nova Questão de Quiz</h3>
+            <input type="hidden" id="editing-quiz-id">
+
+            <div class="quiz-subject-manager" style="background: var(--bg-card); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 1rem;">Gerenciar Matérias</h3>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+            <input type="text" id="new-subject-input" class="form-control" placeholder="Ex: Matemática, Biologia..." style="flex: 1;">
+            <button id="add-subject-btn" class="btn-primary">+ Adicionar</button>
+            </div>
+            <ul id="custom-subjects-list" style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+            </ul>
+            </div>
+
+            <label>Matéria / Assunto</label>
+            <select id="edit-quiz-subject" style="width: 100%; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; margin-bottom: 1rem;">
+                <option value="quiz-webdev">💻 Desenvolvimento Web</option>
+                <option value="quiz-python">🐍 Programação Python</option>
+                <option value="quiz-math">📐 Matemática Aplicada</option>
+                <option value="quiz-english">🇺🇸 Inglês Técnico</option>
+                <option value="quiz-logic">🧩 Lógica de Programação</option>
+                <option value="new-subject">* Criar Nova Matéria...</option>
+            </select>
+
+            <!-- Fields for new subject if selected -->
+            <div id="new-subject-fields" style="display:none; flex-direction:column; gap:0.5rem; margin-bottom:1rem; border: 1px dashed rgba(99, 102, 241, 0.3); padding: 0.8rem; border-radius: 8px;">
+                <label style="margin-top:0; font-size: 0.72rem; color: #a5b4fc;">Nome do Novo Assunto</label>
+                <input type="text" id="edit-quiz-new-subject-name" placeholder="Ex: História, Geografia..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0;">
+                <label style="font-size: 0.72rem; color: #a5b4fc;">Emoji do Novo Assunto</label>
+                <input type="text" id="edit-quiz-new-subject-emoji" placeholder="Ex: 🗺️" style="max-width:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0;">
+            </div>
+
+            <label>Pergunta</label>
+            <textarea id="edit-quiz-question" placeholder="Digite o texto da pergunta..." style="width: 100%; height: 80px; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; margin-bottom: 1rem; font-family: var(--font-body); resize: vertical;"></textarea>
+
+            <label>Alternativas</label>
+            <div style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <span style="font-weight:700; color:var(--primary); font-size: 0.95rem;">A</span>
+                    <input type="text" id="edit-quiz-opt0" placeholder="Alternativa A" style="flex:1; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0; font-size: 0.85rem;">
+                </div>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <span style="font-weight:700; color:var(--primary); font-size: 0.95rem;">B</span>
+                    <input type="text" id="edit-quiz-opt1" placeholder="Alternativa B" style="flex:1; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0; font-size: 0.85rem;">
+                </div>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <span style="font-weight:700; color:var(--primary); font-size: 0.95rem;">C</span>
+                    <input type="text" id="edit-quiz-opt2" placeholder="Alternativa C" style="flex:1; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0; font-size: 0.85rem;">
+                </div>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <span style="font-weight:700; color:var(--primary); font-size: 0.95rem;">D</span>
+                    <input type="text" id="edit-quiz-opt3" placeholder="Alternativa D" style="flex:1; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e2e8f0; font-size: 0.85rem;">
+                </div>
+            </div>
+
+            <label>Índice da Alternativa Correta</label>
+            <select id="edit-quiz-correct" style="width: 100%; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; margin-bottom: 1rem;">
+                <option value="0">Opção A</option>
+                <option value="1">Opção B</option>
+                <option value="2">Opção C</option>
+                <option value="3">Opção D</option>
+            </select>
+
+            <label>Dificuldade</label>
+            <select id="edit-quiz-difficulty" style="width: 100%; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; margin-bottom: 1rem;">
+                <option value="easy">Fácil (15 XP)</option>
+                <option value="medium">Médio (25 XP)</option>
+                <option value="hard">Difícil (40 XP)</option>
+            </select>
+
+            <label>Explicação</label>
+            <textarea id="edit-quiz-explanation" placeholder="Explicação pedagógica exibida ao responder..." style="width: 100%; height: 70px; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e2e8f0; margin-bottom: 1.5rem; font-family: var(--font-body); resize: vertical;"></textarea>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" id="cancel-admin-quiz-modal">Cancelar</button>
+                <button class="btn-save" id="save-admin-quiz-btn">💾 Salvar Questão</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: CREATE CUSTOM ROADMAP -->
+    <div class="modal-overlay" id="roadmap-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="close-roadmap-modal">×</button>
+            <div class="modal-header">
+                <h3>Criar Nova Trilha de Estudo</h3>
+            </div>
+            <form id="roadmap-form">
+                <div class="form-group">
+                    <label for="roadmap-title-input">Nome da Trilha</label>
+                    <input type="text" class="form-control" id="roadmap-title-input" required placeholder="Ex: Ciência de Dados, Alemão Básico...">
+                </div>
+                <div class="form-group">
+                    <label for="roadmap-desc-input">Descrição Breve</label>
+                    <input type="text" class="form-control" id="roadmap-desc-input" required placeholder="Ex: Roadmap focado para o nível intermediário em 3 meses.">
+                </div>
+                <div class="form-group">
+                    <label for="roadmap-steps-count">Quantidade Inicial de Módulos (Passos)</label>
+                    <input type="number" class="form-control" id="roadmap-steps-count" min="1" max="15" value="3" required>
+                </div>
+                
+                <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.4;">
+                    *Nota: A trilha criada será gerada com os passos sugeridos configurados por padrão. Você poderá editá-los e concluí-los livremente!
+                </p>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-roadmap-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Gerar Trilha (+30 XP)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MODAL 2: CREATE DECK -->
+    <div class="modal-overlay" id="deck-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="close-deck-modal">×</button>
+            <div class="modal-header">
+                <h3>Criar Novo Baralho</h3>
+            </div>
+            <form id="deck-form">
+                <div class="form-group">
+                    <label for="deck-title-input">Nome do Baralho</label>
+                    <input type="text" class="form-control" id="deck-title-input" required placeholder="Ex: Inglês Avançado, Estruturas de Dados...">
+                </div>
+                <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.4;">
+                    *Crie o baralho e em seguida você poderá adicionar quantos cartões de recall desejar!
+                </p>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-deck-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Criar Baralho</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MODAL 3: CREATE CARD IN DECK -->
+    <div class="modal-overlay" id="card-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="close-card-modal">×</button>
+            <div class="modal-header">
+                <h3>Adicionar Novo Flashcard</h3>
+            </div>
+            <form id="card-form">
+                <div class="form-group">
+                    <label for="card-front-input">Pergunta (Frente da Carta)</label>
+                    <textarea class="form-control" id="card-front-input" rows="3" required placeholder="Ex: O que é o DOM (Document Object Model)?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="card-back-input">Resposta (Verso da Carta)</label>
+                    <textarea class="form-control" id="card-back-input" rows="3" required placeholder="Ex: Uma representação em árvore e estruturada do documento HTML para manipulação com JS."></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-card-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Adicionar Card (+10 XP)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MODAL 4: CREATE KANBAN TASK -->
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="close-task-modal">×</button>
+            <div class="modal-header">
+                <h3>Criar Nova Tarefa</h3>
+            </div>
+            <form id="task-form">
+                <input type="hidden" id="task-column-target">
+                <div class="form-group">
+                    <label for="task-title-input">Título da Tarefa</label>
+                    <input type="text" class="form-control" id="task-title-input" required placeholder="Ex: Estudar Promises no JS, Praticar Listening...">
+                </div>
+                <div class="form-group">
+                    <label for="task-desc-input">Descrição (Opcional)</label>
+                    <input type="text" class="form-control" id="task-desc-input" placeholder="Ex: Ler capítulo 3 e resolver exercícios.">
+                </div>
+                <div class="form-group">
+                    <label for="task-priority-input">Prioridade</label>
+                    <select class="form-control" id="task-priority-input">
+                        <option value="low">Baixa (Verde)</option>
+                        <option value="medium" selected>Média (Laranja)</option>
+                        <option value="high">Alta (Vermelha)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-due-input">Data Limite (Prazo)</label>
+                    <input type="date" class="form-control" id="task-due-input">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-task-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Tarefa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-step-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="close-edit-step-modal">×</button>
+            <div class="modal-header">
+                <h3>Editar Passo da Trilha</h3>
+            </div>
+            <form id="edit-step-form">
+                <input type="hidden" id="edit-step-id">
+                <div class="form-group">
+                    <label for="edit-step-title">Título do Passo</label>
+                    <input type="text" class="form-control" id="edit-step-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-step-desc">Descrição / Resumo</label>
+                    <textarea class="form-control" id="edit-step-desc" rows="3" required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="edit-step-badge">Tag (ex: Lógica)</label>
+                        <input type="text" class="form-control" id="edit-step-badge">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="edit-step-resource-text">Nome do Link</label>
+                        <input type="text" class="form-control" id="edit-step-resource-text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-step-resource-url">URL do Link</label>
+                    <input type="url" class="form-control" id="edit-step-resource-url">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-edit-step-btn">Cancelar</button>
+                    <button type="button" class="btn-secondary" id="delete-edit-step-btn" style="color: #ef4444; border-color: rgba(239,68,68,0.3);">🗑 Excluir</button>
+                    <button type="submit" class="btn-primary">Salvar Passo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+    
+</body>
+</html>
