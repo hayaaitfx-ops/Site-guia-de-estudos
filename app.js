@@ -134,6 +134,8 @@ let brownNoiseNode = null;
 let cosmicSynthInterval = null;
 let cosmicDelayNode = null;
 let cosmicOscNodes = [];
+let brownGainNode = null;
+let cosmicGainNode = null;
 
 // ============================================
 // BLOQUEIO DE CONVIDADO (Segurança)
@@ -208,6 +210,7 @@ function toggleBrownNoise(start) {
         filter.frequency.value = 800; // Low frequency warm cut
         
         let gainNode = audioCtx.createGain();
+        brownGainNode = gainNode;
         let vol = parseFloat(document.getElementById('sound-volume-brown').value);
         gainNode.gain.setValueAtTime(vol * 0.5, audioCtx.currentTime);
         gainNode.id = 'brown-gain';
@@ -246,6 +249,9 @@ function toggleCosmicSynth(start) {
         masterGain.gain.setValueAtTime(vol * 0.15, audioCtx.currentTime);
         masterGain.id = 'cosmic-gain';
         
+        // VÍNCULO GLOBAL PARA O SLIDER DE VOLUME:
+        cosmicGainNode = masterGain; 
+        
         cosmicDelayNode.connect(masterGain);
         masterGain.connect(audioCtx.destination);
         
@@ -283,6 +289,11 @@ function toggleCosmicSynth(start) {
                 
                 osc.start(now);
                 osc.stop(now + duration);
+                
+                // CORREÇÃO DE MEMÓRIA: Limpa o oscilador quando terminar
+                osc.onended = () => {
+                    cosmicOscNodes = cosmicOscNodes.filter(o => o !== osc);
+                };
                 
                 cosmicOscNodes.push(osc);
             });
@@ -1101,17 +1112,16 @@ document.getElementById('sound-card-rain').onclick = function(e) {
 };
 
 document.getElementById('sound-volume-brown').oninput = function() {
-    if (!audioCtx || !brownNoiseNode) return;
-    // Search for gain node
-    // Simple way is stopping and starting with new volume node
-    toggleBrownNoise(false);
-    toggleBrownNoise(true);
+    if (audioCtx && brownGainNode) {
+        // Altera o volume de forma fluida (rampa linear) em vez de reiniciar
+        brownGainNode.gain.linearRampToValueAtTime(this.value * 0.5, audioCtx.currentTime + 0.1);
+    }
 };
 
 document.getElementById('sound-volume-rain').oninput = function() {
-    if (!audioCtx || !cosmicSynthInterval) return;
-    toggleCosmicSynth(false);
-    toggleCosmicSynth(true);
+    if (audioCtx && cosmicGainNode) {
+        cosmicGainNode.gain.linearRampToValueAtTime(this.value * 0.15, audioCtx.currentTime + 0.1);
+    }
 };
 
 
@@ -1121,6 +1131,16 @@ let currentQueueIndex = 0;
 let isCardFlipped = false;
 
 function renderFlashcards() {
+    const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    if (session.isGuest) {
+        document.getElementById('planner-section').innerHTML = `
+            <div style="text-align:center; padding: 4rem;">
+                <h2>🔒 Recurso Premium</h2>
+                <p>Esta ferramenta é exclusiva para alunos registrados.</p>
+            </div>
+        `;
+        return;
+    }
     let selector = document.getElementById('deck-selector-list');
     selector.innerHTML = "";
     
@@ -1428,6 +1448,16 @@ document.getElementById('card-form').onsubmit = (e) => {
 
 // --- 5: Kanban Planner Drag & Drop and Single Click Mechanics ---
 function renderPlanner() {
+    const session = JSON.parse(localStorage.getItem('currentSession') || '{}');
+    if (session.isGuest) {
+        document.getElementById('planner-section').innerHTML = `
+            <div style="text-align:center; padding: 4rem;">
+                <h2>🔒 Recurso Premium</h2>
+                <p>Esta ferramenta é exclusiva para alunos registrados.</p>
+            </div>
+        `;
+        return;
+    }
     let statuses = ['todo', 'doing', 'done'];
     
     statuses.forEach(status => {
@@ -1519,6 +1549,7 @@ function renderPlanner() {
         
         col.addEventListener('drop', (e) => {
             let draggingCard = document.querySelector('.dragging');
+            if (!draggingCard) return;
             let taskId = draggingCard.getAttribute('data-id');
             let targetStatus = col.getAttribute('data-status');
             
@@ -1698,9 +1729,8 @@ function compileMarkdownToHTML(markdown) {
     html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
     html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
     
-    // Wrap consecutive list tags inside UL
-    html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
-    html = html.replace(/<\/ul>\s*<ul>/gim, '');
+    // O operador + e (?:...) agrupam múltiplos <li> consecutivos corretamente
+    html = html.replace(/(?:<li>.*?<\/li>\s*)+/gim, match => `<ul>\n${match}</ul>`);
     
     // Newline blocks into paragraphs
     html = html.split(/\n\n+/).map(p => {
@@ -1880,6 +1910,7 @@ function runSandboxCode(silent = false) {
     const code = textarea.value;
     const lang = langSelect.value;
 
+    // BLOCO 1: Execução Web (HTML/CSS/JS)
     if (lang === 'webdev') {
         if (iframe) {
             iframe.srcdoc = code;
@@ -1887,7 +1918,9 @@ function runSandboxCode(silent = false) {
                 document.querySelector('.sandbox-tab-btn[data-tab="preview"]')?.click();
             }
         }
-    } else if (lang === 'jslogic') {
+    } 
+    // BLOCO 2: Execução de Lógica (Terminal)
+    else if (lang === 'jslogic') {
         if (!terminal) return;
 
         terminal.innerHTML = `<div class="terminal-line system-msg">> Executando script em ${new Date().toLocaleTimeString()}...</div>`;
@@ -1895,8 +1928,30 @@ function runSandboxCode(silent = false) {
             document.querySelector('.sandbox-tab-btn[data-tab="console"]')?.click();
         }
 
-        const logOutputs = [];
+        // 1. Limpa os intervalos/timeouts da execução anterior
+        if (window.sandboxIntervals) window.sandboxIntervals.forEach(clearInterval);
+        if (window.sandboxTimeouts) window.sandboxTimeouts.forEach(clearTimeout);
+        window.sandboxIntervals = [];
+        window.sandboxTimeouts = [];
+
+        // 2. Guarda as funções nativas para não quebrar o resto do seu site
+        const originalSetInterval = window.setInterval;
+        const originalSetTimeout = window.setTimeout;
         const originalConsoleLog = console.log;
+        const logOutputs = [];
+
+        // 3. Sobrescreve as funções temporariamente
+        window.setInterval = function(fn, time) {
+            let id = originalSetInterval(fn, time);
+            window.sandboxIntervals.push(id);
+            return id;
+        };
+        
+        window.setTimeout = function(fn, time) {
+            let id = originalSetTimeout(fn, time);
+            window.sandboxTimeouts.push(id);
+            return id;
+        };
 
         console.log = function(...args) {
             const formatted = args.map(arg => {
@@ -1908,6 +1963,7 @@ function runSandboxCode(silent = false) {
             logOutputs.push(formatted);
         };
 
+        // 4. Tenta rodar o código do usuário
         try {
             const runner = new Function(code);
             runner();
@@ -1937,7 +1993,10 @@ function runSandboxCode(silent = false) {
             errLine.textContent = `[ERRO] ${error.name}: ${error.message}`;
             terminal.appendChild(errLine);
         } finally {
+            // 5. CRÍTICO: Restaura as funções originais para não quebrar o seu Pomodoro e Síntese de Áudio!
             console.log = originalConsoleLog;
+            window.setInterval = originalSetInterval;
+            window.setTimeout = originalSetTimeout;
             terminal.scrollTop = terminal.scrollHeight;
         }
     }
@@ -2078,6 +2137,30 @@ function initTopNavbar(session) {
         localStorage.removeItem('currentSession');
         window.location.href = 'pagina_login.html';
     });
+}
+
+// compressão da imagem para não bugar
+function compressImage(base64Str, maxWidth, quality = 0.7, callback) {
+    let img = new Image();
+    img.src = base64Str;
+    img.onload = () => {
+        let canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Retorna a imagem em JPEG comprimida
+        callback(canvas.toDataURL('image/jpeg', quality));
+    };
 }
 
 // ============================================================
